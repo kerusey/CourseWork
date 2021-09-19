@@ -41,5 +41,13 @@
     <ClInclude Include="ItemsHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataStructure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Colors.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
 #pragma once
 #ifdef ICS0017DATASOURCE_EXPORTS
-#define LIBSPEC extern "C" _declspec(dllexport)
+	#define LIBSPEC extern "C" _declspec(dllexport)
 #else
-#define LIBSPEC extern "C" _declspec(dllimport)
+	#define LIBSPEC extern "C" _declspec(dllimport)
 #endif
 LIBSPEC HEADER_B *GetStruct1(int iItem, int nItems);
 LIBSPEC HEADER_C *GetStruct2(int iItem, int nItems);
@@ -11,7 +11,7 @@ LIBSPEC HEADER_D *GetStruct4(int iItem, int nItems);
 LIBSPEC HEADER_E *GetStruct5(int iItem, int nItems);
 LIBSPEC void *GetItem(int iItem, char *pID = nullptr);
 #ifdef INSTRUCTOR
-LIBSPEC void SetInstructorMode(); // asks password
+	LIBSPEC void SetInstructorMode(); // asks password
 #endif
 // iItem - index of item(s) to generate (1...10) and insert into data structure
 // nItem - number of items to insert into data structure

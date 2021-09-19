@@ -5,6 +5,7 @@
 #include "Items.h" 
 #include "Headers.h" 
 #include "ICS0017DataSource.h"
+#include "ItemsHandler.h"
 
 class DataStructure {
 	HEADER_E* entryPoint;

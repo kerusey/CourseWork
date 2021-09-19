@@ -11,7 +11,7 @@
 
 
 void coursework1() {
-	DataStructure* structure = new DataStructure(GetStruct5(2, 20));
+	DataStructure* structure = new DataStructure(GetStruct5(10, 100));
 	structure->printDataStructure();
 }
 

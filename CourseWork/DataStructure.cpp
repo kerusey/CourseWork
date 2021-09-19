@@ -1,5 +1,4 @@
 #include "DataStructure.h"
-#include "ItemsHandler.h"
 
 #pragma warning (disable: 4996)
 
@@ -16,7 +15,7 @@ size_t DataStructure::size() const {
 
 void DataStructure::printDataStructure() {
 	HEADER_E* cache = this->entryPoint;
-	size_t currentQueue = 0;
+	size_t currentQueue = 1;
 
 	for (; cache; cache = cache->pNext) {
 		if (cache == nullptr) { continue; } // if there are null pointers in double linked list at first layer
@@ -24,9 +23,7 @@ void DataStructure::printDataStructure() {
 		else {
 			ITEM10** secondLayer = (ITEM10**)cache->ppItems;
 			for (int counter = 0; counter < 26; counter++) {
-				ITEM10* currentObject = *(secondLayer + counter);
-				
-				if (currentObject) { ItemsHandler::printItem((ITEM10*)(currentObject), ++currentQueue); }
+				if (secondLayer[counter]) { ItemsHandler::printItemList((ITEM10*)(secondLayer[counter]), &currentQueue); }
 				
 			}
 		}
