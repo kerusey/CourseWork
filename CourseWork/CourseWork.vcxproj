@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CourseWork.cpp" />
+    <ClCompile Include="DataStructure.cpp" />
     <ClCompile Include="ItemsHandler.cpp" />
   </ItemGroup>
   <ItemGroup>

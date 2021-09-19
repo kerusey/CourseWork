@@ -5,7 +5,7 @@ void ItemsHandler::printItem(ITEM10* item, size_t currentNumber) {
 				 item->pID << " " <<
 				 item->Code << " " <<
 				 item->Date.Day << " " <<
-				 // item->Date.pMonth << " " << 
+				 //item->Date.pMonth << " " << 
 				 item->Date.Year << std::endl;
 }
 
