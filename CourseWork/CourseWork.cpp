@@ -11,7 +11,13 @@
 
 
 void coursework1() {
-	DataStructure* structure = new DataStructure(GetStruct5(10, 100));
+	DataStructure* structure = new DataStructure(GetStruct5(10, 20), 20);
+	//structure->printDataStructure();
+	char* trouble = (char*) "999479869";
+	structure->insertItem(trouble);
+	structure->insertItem(trouble);
+	structure->insertItem(trouble);
+	std::cout << std::endl << "-------------------------------------------" << std::endl << std::endl;
 	structure->printDataStructure();
 }
 

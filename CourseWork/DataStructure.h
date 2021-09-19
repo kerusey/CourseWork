@@ -9,11 +9,12 @@
 
 class DataStructure {
 	HEADER_E* entryPoint;
+	size_t size;
 	
 public:
-	DataStructure(HEADER_E* generatedStructure);
-	size_t size() const;
+	DataStructure(HEADER_E* generatedStructure, size_t size);
 	void printDataStructure();
+	void insertItem(char* pNewItemID = 0);
 	~DataStructure();
 
 };
