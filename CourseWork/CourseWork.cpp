@@ -43,6 +43,8 @@ void coursework1() {
 		}
 	} // Free append
 	
+	structure->printDataStructure(); // New data structure print
+
 	for (int i = 0; i < 5; i++) {
 		try { structure->insertItem(insert[i]); }
 		catch (int exception) { 
@@ -51,7 +53,7 @@ void coursework1() {
 				case 2: { std::cout << "Format Error!" << std::endl; break; }
 			}; 
 		}
-	} // rised exception; id already in dict
+	} // Rised exception; id already in dict
 
 	
 	try { structure->insertItem((char*) "1234"); }
@@ -60,9 +62,40 @@ void coursework1() {
 		case 1: { std::cout << "Item ID already exists!" << std::endl; break; }
 		case 2: { std::cout << "Format Error!" << std::endl; break; }
 		};
-	} // rised exception; error formatting
+	} // Rised exception; error formatting
+
+
+	std::cout << std::endl << "-------------------------------------------" << std::endl << std::endl;
+
+	try { structure->removeItem((char*) "A Aame"); }
+	catch (int exception) {
+		switch (exception) {
+		case 1: { std::cout << "No such thing in structure!" << std::endl; break; }
+		case 2: { std::cout << "Format Error!" << std::endl; break; }
+		};
+	} // Rising "item missing" exception
+
+	try { structure->removeItem(nullptr); }
+	catch (int exception) {
+		switch (exception) {
+		case 1: { std::cout << "No such thing in structure!" << std::endl; break; }
+		case 2: { std::cout << "Format Error!" << std::endl; break; }
+		};
+	} // Rising Format error
+
+	for (int i = 0; i < 5; i++) {
+		try { structure->removeItem(insert[i]); }
+		catch (int exception) {
+			switch (exception) {
+			case 1: { std::cout << "Item ID already exists!" << std::endl; break; }
+			case 2: { std::cout << "Format Error!" << std::endl; break; }
+			};
+		}
+	} // remoiving items, we previously added
 
 	structure->printDataStructure();
+
+	std::cout << std::endl << "-------------------------------------------" << std::endl << std::endl;
 }
 
 int main() {

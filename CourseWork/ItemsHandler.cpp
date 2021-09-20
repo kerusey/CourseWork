@@ -49,3 +49,26 @@ bool ItemsHandler::isInList(ITEM10* head, char* itemID) {
 	}
 	return false;
 }
+
+void ItemsHandler::removeElementFromList(ITEM10** head, char* key) {
+	ITEM10* temp = *head;
+	ITEM10* prev = nullptr;
+
+	if (temp && (std::string) temp->pID == (std::string) key) {
+		*head = temp->pNext;
+		delete temp;
+		return;
+	}
+
+	else {
+		while (temp && (std::string) temp->pID != (std::string) key) {
+			prev = temp;
+			temp = temp->pNext;
+		}
+
+		if (!temp) { return; }
+		prev->pNext = temp->pNext;
+		delete temp;
+	}
+	
+}

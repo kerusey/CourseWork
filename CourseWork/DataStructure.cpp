@@ -39,7 +39,7 @@ bool DataStructure::isInStructure(char* itemID) {
 
 void DataStructure::insertItem(char* pNewItemID) {
 	if (pNewItemID && isInStructure(pNewItemID)) {
-		throw 1;
+		throw 1; // Already exists exception
 	}
 
 	if (pNewItemID == 0 || ItemsHandler::validateIDFormat(pNewItemID)) {
@@ -50,7 +50,33 @@ void DataStructure::insertItem(char* pNewItemID) {
 	}
 
 	else {
-		throw 2;
+		throw 2; // Format error
+	}
+}
+
+void DataStructure::removeItem(char* itemID) {
+	if (itemID == nullptr || !ItemsHandler::validateIDFormat(itemID)) {
+		throw 2; // Format error
+	}
+	else if (!isInStructure(itemID)) {
+		throw 1; // No such thing in structure 
+	}
+	else {
+		HEADER_E* cache = this->entryPoint;
+		for (; cache; cache = cache->pNext) {
+			if (cache == nullptr) { continue; }
+			else {
+				ITEM10** secondLayer = (ITEM10**)cache->ppItems;
+				for (int counter = 0; counter < 26; counter++) {
+					if (secondLayer[counter]) {
+						if (ItemsHandler::isInList(secondLayer[counter], itemID)) {
+							ItemsHandler::removeElementFromList(&secondLayer[counter], itemID);
+						}
+					}
+				}
+			}
+		}
+
 	}
 }
 

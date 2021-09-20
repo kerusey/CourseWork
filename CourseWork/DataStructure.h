@@ -16,6 +16,7 @@ public:
 	void printDataStructure();
 	void insertItem(char* pNewItemID = 0);
 	bool isInStructure(char* itemID);
+	void removeItem(char* itemID);
 	~DataStructure();
 
 };
