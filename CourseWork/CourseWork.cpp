@@ -51,7 +51,16 @@ void coursework1() {
 				case 2: { std::cout << "Format Error!" << std::endl; break; }
 			}; 
 		}
-	} // TODO: rise exception if id already in dict
+	} // rised exception; id already in dict
+
+	
+	try { structure->insertItem((char*) "1234"); }
+	catch (int exception) {
+		switch (exception) {
+		case 1: { std::cout << "Item ID already exists!" << std::endl; break; }
+		case 2: { std::cout << "Format Error!" << std::endl; break; }
+		};
+	} // rised exception; error formatting
 
 	structure->printDataStructure();
 }
