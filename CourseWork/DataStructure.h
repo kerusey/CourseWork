@@ -15,6 +15,7 @@ public:
 	DataStructure(HEADER_E* generatedStructure, size_t size);
 	void printDataStructure();
 	void insertItem(char* pNewItemID = 0);
+	bool isInStructure(char* itemID);
 	~DataStructure();
 
 };
