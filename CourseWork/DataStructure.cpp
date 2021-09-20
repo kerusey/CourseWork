@@ -38,11 +38,11 @@ bool DataStructure::isInStructure(char* itemID) {
 }
 
 void DataStructure::insertItem(char* pNewItemID) {
-	if (isInStructure(pNewItemID)) {
+	if (isInStructure(pNewItemID)) { // current error exception rises because firstly u check null ptr to be in list and it calls str compartion with nullptr
 		throw 1;
 	}
 
-	if (pNewItemID == 0 || ItemsHandler::validateIDFormat(pNewItemID)) {
+	else if (pNewItemID == 0 || ItemsHandler::validateIDFormat(pNewItemID)) {
 		ITEM10* newItem = (ITEM10*)GetItem(10, ((char*)pNewItemID));
 
 		newItem->pNext = (ITEM10*)this->entryPoint->ppItems[0];
