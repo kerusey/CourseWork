@@ -107,3 +107,33 @@ ITEM10* ItemsHandler::getItemFromList(ITEM10* list, char* itemID) {
 		}
 	}
 }
+
+bool ItemsHandler::areSame(ITEM10* list1, ITEM10* list2) {
+	for (; list1 || list2; list1 = list1->pNext, list2 = list2->pNext) {
+		if (!list1 && list2 || list1 && !list2) { return false; }
+		if (!(
+				(list1->Code == list2->Code) &&
+				((std::string) list1->pID == (std::string)list2->pID) &&
+				(list1->Date.Day == list2->Date.Day) &&
+				((std::string) list1->Date.pMonth == (std::string) list2->Date.pMonth) &&
+				(list1->Date.Year == list2->Date.Year)
+			)) { return false; }
+	}
+	return true;
+}
+
+void ItemsHandler::copyList(ITEM10* listDonor, ITEM10* listRecepient) {
+	for (; listDonor; listDonor = listDonor->pNext) {
+
+		listRecepient->Code = listDonor->Code;
+		listRecepient->pID = listDonor->pID;
+		listRecepient->Date.Day = listDonor->Date.Day;
+		listRecepient->Date.pMonth = listDonor->Date.pMonth;
+		listRecepient->Date.Year = listDonor->Date.Year;
+
+		listRecepient->pNext = listDonor;
+
+		(*listRecepient) = listDonor;
+
+	}
+}

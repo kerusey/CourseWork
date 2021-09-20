@@ -127,13 +127,21 @@ void coursework2() {
 	std::cout << "New struct: " << std::endl;
 	DataStructure anotherStructure = *structure;
 	anotherStructure.printDataStructure();
-
+	
 	separator();
 
 	anotherStructure.~DataStructure();
+	std::cout << "destructor check" << std::endl;
 	anotherStructure.printDataStructure();
-
+	structure->printDataStructure();
+	/*
 	separator();
+
+	DataStructure* cache = new DataStructure(GetStruct5(10, 20), 20);
+	structure->printDataStructure();
+	separator();
+	cache->printDataStructure();
+	*/
 }
 
 

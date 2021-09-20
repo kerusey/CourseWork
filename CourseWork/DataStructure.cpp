@@ -113,12 +113,10 @@ DataStructure::~DataStructure() { // works
 	if (!this->entryPoint) { return; }
 	for (; this->entryPoint; this->entryPoint = this->entryPoint->pNext) {
 		for (int counter = 0; counter < 26; counter++) {
-			
-			// ITEM10** items = (ITEM10**)this->entryPoint->ppItems;
 			ItemsHandler::freeList(&(((ITEM10**)this->entryPoint->ppItems)[counter]));
 		}
 	}
-} // FIXME
+}
 
 void DataStructure::operator+=(ITEM10* item) {
 	item->pNext = (ITEM10*)this->entryPoint->ppItems[0];
@@ -130,8 +128,37 @@ void DataStructure::operator-=(char* item) {
 	removeItem(item);
 }
 
-DataStructure& DataStructure::operator=(const DataStructure& Right) {
-	DataStructure::~DataStructure();
-	this->size = Right.size;
-	this->entryPoint = (HEADER_E*) Right.entryPoint;
+DataStructure& DataStructure::operator=(const DataStructure& right) {
+	this->~DataStructure();
+	this->size = right.size;
+	this->entryPoint = right.entryPoint;
+
+	HEADER_E* cache = this->entryPoint;
+
+	for (; cache; cache = cache->pNext) {
+		ITEM10** donor = (ITEM10**) cache->ppItems;
+		for (int counter = 0; counter < 26; counter++) {
+			if (donor[counter]) {
+				ItemsHandler::copyList(donor[counter], &(this->entryPoint->ppItems)[counter]);
+			}
+		}
+	}
+	return *this;
 } 
+
+int DataStructure::operator==(DataStructure& other) {
+	if (this->size != other.getItemsNumber()) { return 0; }
+	
+	HEADER_E* cache = this->entryPoint;
+	HEADER_E* otherCache = other.entryPoint;
+
+	for (; cache || otherCache; cache = cache->pNext, otherCache = otherCache->pNext) {
+		if (!cache && otherCache || cache && !otherCache) { return 0; }
+		for (int counter = 0; counter < 26; counter++) {
+			bool areSame = ItemsHandler::areSame(((ITEM10**)cache->ppItems)[counter],
+												 ((ITEM10**)otherCache->ppItems)[counter]);
+			if (!areSame) { return 0; }
+		}
+	}
+	return 1;
+}

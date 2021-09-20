@@ -25,8 +25,8 @@ public:
 	// operators 
 	void operator+=(ITEM10* anotherStructure); // Done
 	void operator-=(char* pID); // Done
-	DataStructure& operator=(const DataStructure& Right); // Done
-	int operator==(DataStructure& Other); 
+	DataStructure& operator=(const DataStructure& right); // Done
+	int operator==(DataStructure& other); 
 	// operators 
 
 	~DataStructure();
