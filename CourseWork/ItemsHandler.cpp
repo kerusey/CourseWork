@@ -1,13 +1,25 @@
 #include "ItemsHandler.h"
 
 void ItemsHandler::printItem(ITEM10* item, size_t* currentNumber) { // should be fine 
-	std::cout << *currentNumber << ") " <<
-				 item->pID << " " <<
-				 item->Code << " " <<
-				 item->Date.Day << " " <<
-				 item->Date.pMonth << " " <<
-				 item->Date.Year << std::endl;
-	(*currentNumber)++;
+	if (!item) { std::cout << "Nothing to print!" << std::endl; }
+
+	if (currentNumber) {
+		std::cout << *currentNumber << ") " <<
+					  item->pID << " " <<
+					  item->Code << " " <<
+					  item->Date.Day << " " <<
+					  item->Date.pMonth << " " <<
+					  item->Date.Year << std::endl;
+		(*currentNumber)++;
+	}
+
+	else {
+		std::cout << item->pID << " " <<
+					 item->Code << " " <<
+					 item->Date.Day << " " <<
+					 item->Date.pMonth << " " <<
+					 item->Date.Year << std::endl;
+	}
 }
 
 void ItemsHandler::printItemList(ITEM10* head, size_t* currentNumber) {
@@ -71,4 +83,27 @@ void ItemsHandler::removeElementFromList(ITEM10** head, char* key) {
 		delete temp;
 	}
 	
+}
+
+void ItemsHandler::freeList(ITEM10** list) {
+	if (!*list) { return; }
+	ITEM10* current = *list;
+	ITEM10* next = nullptr;
+
+	for (; current; current->pNext) {
+		next = current->pNext;
+		free(current);
+		current = next;
+	}
+	*list = nullptr;
+
+}
+
+ITEM10* ItemsHandler::getItemFromList(ITEM10* list, char* itemID) {
+	for (; list; list = list->pNext) {
+		if ((std::string)list->pID == (std::string)itemID) { 
+			list->pNext = nullptr;
+			return list; 
+		}
+	}
 }

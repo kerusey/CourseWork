@@ -5,6 +5,34 @@
 DataStructure::DataStructure(HEADER_E* generatedStructure, size_t size): 
 	entryPoint (generatedStructure), size(size) {}
 
+DataStructure::DataStructure() :
+	entryPoint(nullptr), size(0) {}
+
+DataStructure::DataStructure(char* pFilename) {
+	
+}
+
+size_t DataStructure::getItemsNumber() { return this->size; }
+
+ITEM10* DataStructure::getItem(char* itemID) {
+	HEADER_E* cache = this->entryPoint;
+
+	for (; cache; cache = cache->pNext) {
+		if (cache == nullptr) { continue; } // if there are null pointers in double linked list at first layer
+		else {
+			ITEM10** secondLayer = (ITEM10**)cache->ppItems;
+			for (int counter = 0; counter < 26; counter++) {
+				if (secondLayer[counter]) {
+					if (ItemsHandler::isInList(secondLayer[counter], itemID)) { 
+						return ItemsHandler::getItemFromList(secondLayer[counter], itemID);
+					}
+				}
+			}
+		}
+	}
+	return nullptr;
+}
+
 void DataStructure::printDataStructure() {
 	HEADER_E* cache = this->entryPoint;
 	size_t currentQueue = 1;
@@ -71,6 +99,7 @@ void DataStructure::removeItem(char* itemID) {
 					if (secondLayer[counter]) {
 						if (ItemsHandler::isInList(secondLayer[counter], itemID)) {
 							ItemsHandler::removeElementFromList(&secondLayer[counter], itemID);
+							this->size--;
 						}
 					}
 				}
@@ -80,4 +109,28 @@ void DataStructure::removeItem(char* itemID) {
 	}
 }
 
-DataStructure::~DataStructure() {}
+DataStructure::~DataStructure() {
+	if (!this->entryPoint) { return; }
+	for (; this->entryPoint; this->entryPoint->pNext) {
+		for (int counter = 0; counter < 26; counter++) {
+			// ITEM10** items = (ITEM10**)this->entryPoint->ppItems;
+			ItemsHandler::freeList(&(((ITEM10**)this->entryPoint->ppItems)[counter]));
+		}
+	}
+} // FIXME
+
+void DataStructure::operator+=(ITEM10* item) {
+	item->pNext = (ITEM10*)this->entryPoint->ppItems[0];
+	this->entryPoint->ppItems[0] = item;
+	this->size++;
+}
+
+void DataStructure::operator-=(char* item) {
+	removeItem(item);
+}
+
+DataStructure& DataStructure::operator=(const DataStructure& Right) {
+	DataStructure::~DataStructure();
+	this->size = Right.size;
+	this->entryPoint = (HEADER_E*) Right.entryPoint;
+} 

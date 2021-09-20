@@ -9,6 +9,9 @@
 
 #pragma warning ( disable : 4996 )
 
+void separator() {
+	std::cout << std::endl << "-------------------------------------------" << std::endl << std::endl;
+}
 
 void coursework1() {
 	DataStructure* structure = new DataStructure(GetStruct5(10, 20), 20);
@@ -21,7 +24,7 @@ void coursework1() {
 		"Th Z",
 	};
 
-	std::cout << std::endl << "-------------------------------------------" << std::endl << std::endl;
+	separator();
 
 	for (int i = 0; i < 5; i++) {
 		try { structure->insertItem(insert[i]); }
@@ -54,7 +57,6 @@ void coursework1() {
 			}; 
 		}
 	} // Rised exception; id already in dict
-
 	
 	try { structure->insertItem((char*) "1234"); }
 	catch (int exception) {
@@ -64,8 +66,7 @@ void coursework1() {
 		};
 	} // Rised exception; error formatting
 
-
-	std::cout << std::endl << "-------------------------------------------" << std::endl << std::endl;
+	separator();
 
 	try { structure->removeItem((char*) "A Aame"); }
 	catch (int exception) {
@@ -92,13 +93,48 @@ void coursework1() {
 			};
 		}
 	} // remoiving items, we previously added
-
+	
 	structure->printDataStructure();
-
-	std::cout << std::endl << "-------------------------------------------" << std::endl << std::endl;
+	separator();
+	structure->~DataStructure();
 }
 
+void coursework2() {
+	DataStructure* structure = new DataStructure(GetStruct5(10, 20), 20);
+	structure->printDataStructure();
+
+	separator();
+
+	ItemsHandler::printItem(structure->getItem((char*)"Fuchsia Rose"));
+
+	separator();
+
+	ITEM10* listToBeAdded = (ITEM10*)GetItem(10);
+	ItemsHandler::printItemList(listToBeAdded);
+	
+	separator();
+	
+	*structure += listToBeAdded;
+	structure->printDataStructure();
+
+	separator();
+
+	*structure -= (char*)"Fuchsia Rose";
+	structure->printDataStructure();
+	
+	separator();
+
+	std::cout << "New struct: " << std::endl;
+	// DataStructure anotherStructure = *structure;
+	// anotherStructure.printDataStructure();
+	// anotherStructure.~DataStructure();
+	structure->~DataStructure();
+
+}
+
+
 int main() {
-	coursework1();
+	coursework1(); // Done!
+	// coursework2();
 	return 0;
 }
