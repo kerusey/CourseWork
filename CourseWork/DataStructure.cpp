@@ -109,10 +109,11 @@ void DataStructure::removeItem(char* itemID) {
 	}
 }
 
-DataStructure::~DataStructure() {
+DataStructure::~DataStructure() { // works
 	if (!this->entryPoint) { return; }
-	for (; this->entryPoint; this->entryPoint->pNext) {
+	for (; this->entryPoint; this->entryPoint = this->entryPoint->pNext) {
 		for (int counter = 0; counter < 26; counter++) {
+			
 			// ITEM10** items = (ITEM10**)this->entryPoint->ppItems;
 			ItemsHandler::freeList(&(((ITEM10**)this->entryPoint->ppItems)[counter]));
 		}

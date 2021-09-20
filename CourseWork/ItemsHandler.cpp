@@ -85,8 +85,8 @@ void ItemsHandler::removeElementFromList(ITEM10** head, char* key) {
 	
 }
 
-void ItemsHandler::freeList(ITEM10** list) {
-	if (!*list) { return; }
+void ItemsHandler::freeList(ITEM10** list) { // works pretty fine 
+	if (!list) { return; }
 	ITEM10* current = *list;
 	ITEM10* next = nullptr;
 

@@ -109,12 +109,12 @@ void coursework2() {
 
 	separator();
 
-	ITEM10* listToBeAdded = (ITEM10*)GetItem(10);
-	ItemsHandler::printItemList(listToBeAdded);
-	
+	ITEM10* toBeAdded = (ITEM10*)GetItem(10);
+	ItemsHandler::printItem(toBeAdded);
+
 	separator();
 	
-	*structure += listToBeAdded;
+	*structure += toBeAdded;
 	structure->printDataStructure();
 
 	separator();
@@ -125,16 +125,20 @@ void coursework2() {
 	separator();
 
 	std::cout << "New struct: " << std::endl;
-	// DataStructure anotherStructure = *structure;
-	// anotherStructure.printDataStructure();
-	// anotherStructure.~DataStructure();
-	structure->~DataStructure();
+	DataStructure anotherStructure = *structure;
+	anotherStructure.printDataStructure();
 
+	separator();
+
+	anotherStructure.~DataStructure();
+	anotherStructure.printDataStructure();
+
+	separator();
 }
 
 
 int main() {
-	coursework1(); // Done!
-	// coursework2();
+	// coursework1(); // Done!
+	coursework2();
 	return 0;
 }
