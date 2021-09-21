@@ -122,18 +122,19 @@ bool ItemsHandler::areSame(ITEM10* list1, ITEM10* list2) {
 	return true;
 }
 
-void ItemsHandler::copyList(ITEM10* listDonor, ITEM10* listRecepient) {
-	for (; listDonor; listDonor = listDonor->pNext) {
+ITEM10* ItemsHandler::copyList(ITEM10* head) {
+	
+	if (!head) { return nullptr;  }
+	ITEM10* newNode = (ITEM10*) malloc(sizeof(ITEM10*));
 
-		listRecepient->Code = listDonor->Code;
-		listRecepient->pID = listDonor->pID;
-		listRecepient->Date.Day = listDonor->Date.Day;
-		listRecepient->Date.pMonth = listDonor->Date.pMonth;
-		listRecepient->Date.Year = listDonor->Date.Year;
+	newNode->Code = head->Code;
+	newNode->pID = head->pID;
+	newNode->Date.Day = head->Date.Day;
+	newNode->Date.pMonth = head->Date.pMonth;
+	newNode->Date.Year = head->Date.Year;
 
-		listRecepient->pNext = listDonor;
+	newNode->pNext= copyList(head->pNext);
 
-		(*listRecepient) = listDonor;
-
-	}
+	return newNode;
+	
 }

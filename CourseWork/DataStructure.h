@@ -25,9 +25,14 @@ public:
 	// operators 
 	void operator+=(ITEM10* anotherStructure); // Done
 	void operator-=(char* pID); // Done
-	DataStructure& operator=(const DataStructure& right); // Done
+	DataStructure* operator=(DataStructure* right); 
 	int operator==(DataStructure& other); 
 	// operators 
+
+	friend std::ostream& operator<<(std::ostream& out, DataStructure& list) {
+		list.printDataStructure();
+		return out;
+	}
 
 	~DataStructure();
 

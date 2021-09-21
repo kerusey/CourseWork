@@ -128,22 +128,23 @@ void DataStructure::operator-=(char* item) {
 	removeItem(item);
 }
 
-DataStructure& DataStructure::operator=(const DataStructure& right) {
+DataStructure* DataStructure::operator=(DataStructure* right) {
 	this->~DataStructure();
-	this->size = right.size;
-	this->entryPoint = right.entryPoint;
-
+	this->size = right->size;
+	this->entryPoint = right->entryPoint;
+	std::cout << "heelo";
+	std::cout << (this->entryPoint? "NULL" : "VAR") << std::endl;
 	HEADER_E* cache = this->entryPoint;
 
 	for (; cache; cache = cache->pNext) {
 		ITEM10** donor = (ITEM10**) cache->ppItems;
 		for (int counter = 0; counter < 26; counter++) {
 			if (donor[counter]) {
-				ItemsHandler::copyList(donor[counter], &(this->entryPoint->ppItems)[counter]);
+				(this->entryPoint->ppItems)[counter] = ItemsHandler::copyList(donor[counter]);
 			}
 		}
 	}
-	return *this;
+	return this;
 } 
 
 int DataStructure::operator==(DataStructure& other) {

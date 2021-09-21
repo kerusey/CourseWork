@@ -125,14 +125,14 @@ void coursework2() {
 	separator();
 
 	std::cout << "New struct: " << std::endl;
-	DataStructure anotherStructure = *structure;
-	anotherStructure.printDataStructure();
+	DataStructure* anotherStructure = (structure);
+	anotherStructure->printDataStructure();
 	
 	separator();
 
-	anotherStructure.~DataStructure();
+	structure->~DataStructure();
 	std::cout << "destructor check" << std::endl;
-	anotherStructure.printDataStructure();
+	anotherStructure->printDataStructure();
 	structure->printDataStructure();
 	/*
 	separator();
