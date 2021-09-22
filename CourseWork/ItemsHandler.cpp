@@ -122,10 +122,10 @@ bool ItemsHandler::areSame(ITEM10* list1, ITEM10* list2) {
 	return true;
 }
 
-ITEM10* ItemsHandler::copyList(ITEM10* head) {
-	
-	if (!head) { return nullptr;  }
-	ITEM10* newNode = (ITEM10*) malloc(sizeof(ITEM10*));
+ITEM10* ItemsHandler::copyList(ITEM10* head) { // Works 
+	if (!head) { return nullptr; }
+
+	ITEM10* newNode = (ITEM10*) malloc(sizeof(ITEM10));
 
 	newNode->Code = head->Code;
 	newNode->pID = head->pID;
@@ -133,8 +133,17 @@ ITEM10* ItemsHandler::copyList(ITEM10* head) {
 	newNode->Date.pMonth = head->Date.pMonth;
 	newNode->Date.Year = head->Date.Year;
 
-	newNode->pNext= copyList(head->pNext);
+	newNode->pNext = copyList(head->pNext);
 
 	return newNode;
-	
+}
+
+std::vector <ITEM10> ItemsHandler::listToVector(ITEM10* head) {
+	std::vector <ITEM10> responce;
+	for (; head; head = head->pNext) { 
+		ITEM10 cache = *head;
+		cache.pNext = nullptr;
+		responce.push_back(cache);
+	}
+	return responce;
 }

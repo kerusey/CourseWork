@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 #include "stdarg.h"
 #include "DateTime.h" 
 #include "Items.h" 
@@ -17,15 +18,17 @@ public:
 	DataStructure(char* pFilename); // CW2
 	void printDataStructure();
 	void insertItem(char* pNewItemID = 0);
+	void insertItem(ITEM10* item);
 	bool isInStructure(char* itemID);
 	void removeItem(char* itemID);
 	ITEM10* getItem(char* pID); // CW2
 	size_t getItemsNumber(); // CW2
+	std::vector <ITEM10> getAllItems();
 
 	// operators 
 	void operator+=(ITEM10* anotherStructure); // Done
 	void operator-=(char* pID); // Done
-	DataStructure* operator=(DataStructure* right); 
+	DataStructure& operator=(DataStructure& right); 
 	int operator==(DataStructure& other); 
 	// operators 
 

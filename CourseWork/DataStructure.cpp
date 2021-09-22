@@ -82,6 +82,12 @@ void DataStructure::insertItem(char* pNewItemID) {
 	}
 }
 
+void DataStructure::insertItem(ITEM10* item) {
+	item->pNext = (ITEM10*) *(this->entryPoint->ppItems);
+	*(this->entryPoint->ppItems) = item;
+	this->size++;
+}
+
 void DataStructure::removeItem(char* itemID) {
 	if (itemID == nullptr || !ItemsHandler::validateIDFormat(itemID)) {
 		throw 2; // Format error
@@ -128,23 +134,10 @@ void DataStructure::operator-=(char* item) {
 	removeItem(item);
 }
 
-DataStructure* DataStructure::operator=(DataStructure* right) {
+DataStructure& DataStructure::operator=(DataStructure& right) {
 	this->~DataStructure();
-	this->size = right->size;
-	this->entryPoint = right->entryPoint;
-	std::cout << "heelo";
-	std::cout << (this->entryPoint? "NULL" : "VAR") << std::endl;
-	HEADER_E* cache = this->entryPoint;
-
-	for (; cache; cache = cache->pNext) {
-		ITEM10** donor = (ITEM10**) cache->ppItems;
-		for (int counter = 0; counter < 26; counter++) {
-			if (donor[counter]) {
-				(this->entryPoint->ppItems)[counter] = ItemsHandler::copyList(donor[counter]);
-			}
-		}
-	}
-	return this;
+	
+	return *this;
 } 
 
 int DataStructure::operator==(DataStructure& other) {
@@ -162,4 +155,16 @@ int DataStructure::operator==(DataStructure& other) {
 		}
 	}
 	return 1;
+}
+
+std::vector <ITEM10> DataStructure::getAllItems() {
+	HEADER_E* entryPoint = this->entryPoint;
+	std::vector <ITEM10> result = {};
+	for (; entryPoint; entryPoint = entryPoint->pNext) {
+		for (int i = 0; i < 26; i++) {
+			std::vector <ITEM10> cache = ItemsHandler::listToVector((ITEM10*) (entryPoint->ppItems)[i]);
+			result.insert(result.end(), cache.begin(), cache.end());
+		}
+	}
+	return result;
 }

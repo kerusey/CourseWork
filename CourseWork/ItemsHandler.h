@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 #include "Items.h"
 #include "Headers.h"
 #include "ICS0017DataSource.h"
@@ -14,5 +15,6 @@ namespace ItemsHandler {
 	bool checkWord(char* word, int len);
 	bool areSame(ITEM10* list1, ITEM10* list2);
 	bool validateIDFormat(char* pNewItemID);
+	std::vector <ITEM10> listToVector(ITEM10* head);
 	bool isInList(ITEM10* head, char* itemID);
 }

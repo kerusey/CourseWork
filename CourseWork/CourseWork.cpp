@@ -1,5 +1,6 @@
 #include <iostream> 
 #include <iomanip>
+#include <vector>
 #include "stdarg.h"
 #include "DateTime.h" 
 #include "Items.h" 
@@ -100,6 +101,7 @@ void coursework1() {
 }
 
 void coursework2() {
+	/*
 	DataStructure* structure = new DataStructure(GetStruct5(10, 20), 20);
 	structure->printDataStructure();
 
@@ -123,17 +125,23 @@ void coursework2() {
 	structure->printDataStructure();
 	
 	separator();
+	*/
 
+
+	DataStructure* structure = new DataStructure(GetStruct5(10, 20), 20);
+	structure->printDataStructure();
+	separator();
 	std::cout << "New struct: " << std::endl;
-	DataStructure* anotherStructure = (structure);
-	anotherStructure->printDataStructure();
+	DataStructure anotherStructure;
+	anotherStructure = *structure;
+	// anotherStructure.printDataStructure();
 	
 	separator();
 
-	structure->~DataStructure();
+	// structure->~DataStructure();
 	std::cout << "destructor check" << std::endl;
-	anotherStructure->printDataStructure();
-	structure->printDataStructure();
+	//anotherStructure.printDataStructure();
+	//structure->printDataStructure();
 	/*
 	separator();
 
@@ -144,9 +152,34 @@ void coursework2() {
 	*/
 }
 
+void tests() {
+	ITEM10* items = (ITEM10*) GetItem(10);
+	items->pNext = (ITEM10*)GetItem(10);
+	items->pNext->pNext = (ITEM10*)GetItem(10);
+	items->pNext->pNext->pNext = (ITEM10*)GetItem(10);
+	items->pNext->pNext->pNext->pNext = (ITEM10*)GetItem(10);
+	items->pNext->pNext->pNext->pNext->pNext = (ITEM10*)GetItem(10);
+	items->pNext->pNext->pNext->pNext->pNext->pNext = (ITEM10*)GetItem(10);
+	items->pNext->pNext->pNext->pNext->pNext->pNext->pNext = (ITEM10*)GetItem(10);
+	ItemsHandler::printItemList(items);
+	separator();
+	std::vector <ITEM10> collection = ItemsHandler::listToVector(items);
+	
+	DataStructure* structure = new DataStructure(GetStruct5(10, 10), 10);
+	for (size_t i = 0; i < collection.size(); i++) {
+		structure->insertItem(&collection[i]);
+	}
+	
+	structure->printDataStructure();
+	separator();
+	
+	std::vector <ITEM10> result = structure->getAllItems();
+	for (auto i : result) { ItemsHandler::printItem(&i); }
+}
 
 int main() {
+	tests();
 	// coursework1(); // Done!
-	coursework2();
+	// coursework2();
 	return 0;
 }
