@@ -191,3 +191,10 @@ DataStructure* DataStructure::copyElements(DataStructure& original) {
 	newDataStruct->removeItem((char*)"Danila Likh"); // removing it
 	return newDataStruct;
 }
+
+void DataStructure::write(char* pFilename) {
+	std::vector <ITEM10> itemsToBeWritten = this->getAllItems();
+	std::ofstream ofs(pFilename);
+	boost::archive::binary_oarchive ar(ofs);
+	ar& itemsToBeWritten;
+}
