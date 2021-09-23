@@ -17,5 +17,5 @@ namespace ItemsHandler {
 	bool validateIDFormat(char* pNewItemID);
 	std::vector <ITEM10> listToVector(ITEM10* head);
 	bool isInList(ITEM10* head, char* itemID);
-	char* serializeItem(ITEM10* item);
+	char* serializeItem(ITEM10* item, size_t* size);
 }

@@ -101,7 +101,6 @@ void coursework1() {
 }
 
 void coursework2() {
-	/*
 	DataStructure* structure = new DataStructure(GetStruct5(10, 20), 20);
 	structure->printDataStructure();
 
@@ -125,10 +124,8 @@ void coursework2() {
 	structure->printDataStructure();
 	
 	separator();
-	*/
 
-
-	DataStructure* structure = new DataStructure(GetStruct5(10, 20), 20);
+	structure = new DataStructure(GetStruct5(10, 20), 20);
 	structure->printDataStructure();
 	separator();
 	std::cout << "New struct: " << std::endl;
@@ -162,6 +159,16 @@ void coursework2() {
 	std::cout << (*structure == anotherStructure) << std::endl; // Order matters!
 
 	separator();
+
+	structure->printDataStructure();
+	structure->write((char*) "C:\\CourseWorkFolder\\dataset.dat");
+
+	DataStructure* fromFile = new DataStructure((char*) "C:\\CourseWorkFolder\\dataset.dat");
+
+	separator();
+
+	fromFile->printDataStructure();
+
 }
 
 void tests() {

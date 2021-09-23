@@ -14,8 +14,56 @@ DataStructure::DataStructure(DataStructure& original) {
 DataStructure::DataStructure() :
 	entryPoint(nullptr), size(0) {}
 
-DataStructure::DataStructure(char* pFilename) {
-	
+DataStructure::DataStructure(char* filename) {
+	FILE* pFile = fopen(filename, "rb");
+	char* pData;
+	long lSize;
+	if (pFile) {
+		fseek(pFile, 0, SEEK_END);
+		lSize = ftell(pFile);
+		rewind(pFile);
+		pData = (char*)malloc(lSize);
+		int n = fread(pData, 1, lSize, pFile);
+		fclose(pFile);
+	}
+	else { std::cout << "file error" << std::endl; return; }
+
+	DataStructure* newDataStruct = new DataStructure(GetStruct5(10, 1), 1);
+	ITEM10 itemToBeRemoved = newDataStruct->getAllItems()[0];
+	newDataStruct->insertItem((char*)"Danila Likh"); // setting up static cache entry point 
+	newDataStruct->removeItem(itemToBeRemoved.pID);
+	char* cursor;
+	int totalItems = 0;
+	memcpy(&totalItems, cursor = pData, sizeof(int));
+	cursor += sizeof(int);
+	for (int i = 0; i < totalItems; i++) {
+		int pIdSize = 0;
+		char* pID;
+		unsigned long int code = 0;
+		int day = 0,
+			year = 0;
+		char* month;
+		memcpy(&pIdSize, cursor, sizeof(int));
+		pID = (char*)malloc(pIdSize * sizeof(char));
+		memcpy(pID, cursor += sizeof(int), pIdSize);
+		memcpy(&code, cursor += pIdSize, sizeof(unsigned long int));
+		memcpy(&day, cursor += sizeof(int), sizeof(int));
+		memcpy(&month, cursor += sizeof(char*), sizeof(int));
+		memcpy(&year, cursor += sizeof(int), sizeof(int));
+		cursor += sizeof(int);
+		ITEM10* pointer = (ITEM10*)GetItem(10, pID);
+		pointer->Date.Day = day;
+		pointer->Date.pMonth = month;
+		pointer->Date.Year = year;
+		pointer->Code = code;
+		pointer->pID = pID;
+
+		newDataStruct->insertItem(*pointer);
+	}
+	newDataStruct->removeItem((char*)"Danila Likh"); // removing it
+
+	this->entryPoint = newDataStruct->entryPoint;
+	this->size = newDataStruct->size;
 }
 
 size_t DataStructure::getItemsNumber() { return this->size; }
@@ -192,9 +240,20 @@ DataStructure* DataStructure::copyElements(DataStructure& original) {
 	return newDataStruct;
 }
 
-void DataStructure::write(char* pFilename) {
+void DataStructure::write(char* filename) {
+	FILE* pFile = fopen(filename, "wb");
+	if (!pFile) { std::cout << "File not opened" << std::endl; return; }
+
 	std::vector <ITEM10> itemsToBeWritten = this->getAllItems();
-	std::ofstream ofs(pFilename);
-	boost::archive::binary_oarchive ar(ofs);
-	ar& itemsToBeWritten;
+	char* totalNum = (char*)malloc(sizeof(int));
+	
+	memcpy(totalNum, &this->size, sizeof(int));
+	fwrite(totalNum, 1, sizeof(int), pFile);
+	for (int i = 0; i < this->size; i++) {
+		size_t n = 0;
+		char* serialized = ItemsHandler::serializeItem(&itemsToBeWritten[i], &n);
+		fwrite(serialized, 1, n, pFile);
+	}
+
+	fclose(pFile);
 }

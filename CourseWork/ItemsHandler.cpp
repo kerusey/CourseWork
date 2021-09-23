@@ -147,3 +147,17 @@ std::vector <ITEM10> ItemsHandler::listToVector(ITEM10* head) {
 	}
 	return responce;
 }
+
+char* ItemsHandler::serializeItem(ITEM10* item, size_t* size) {
+	int n = strlen(item->pID) + 1;
+	char* serialItem, * r;
+	*size = n + sizeof(ITEM2) + 3 * sizeof(int) + sizeof(unsigned long int) - sizeof(ITEM2*) - sizeof(TIME*) - sizeof(char*);
+	serialItem = (char*) malloc(*size);
+	memcpy(r = serialItem, &n, sizeof(int));
+	memcpy(r += sizeof(int), item->pID, n);
+	memcpy(r += n, &item->Code, sizeof(unsigned long int));
+	memcpy(r += sizeof(int), &item->Date.Day, sizeof(int));
+	memcpy(r += sizeof(char*), &item->Date.pMonth, sizeof(int));
+	memcpy(r += sizeof(int), &item->Date.Year, sizeof(int));
+	return serialItem;
+}
