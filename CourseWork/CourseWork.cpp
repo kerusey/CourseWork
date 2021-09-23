@@ -134,52 +134,42 @@ void coursework2() {
 	std::cout << "New struct: " << std::endl;
 	DataStructure anotherStructure;
 	anotherStructure = *structure;
-	// anotherStructure.printDataStructure();
+	anotherStructure.printDataStructure();
 	
 	separator();
 
-	// structure->~DataStructure();
-	std::cout << "destructor check" << std::endl;
-	//anotherStructure.printDataStructure();
-	//structure->printDataStructure();
-	/*
+	structure->~DataStructure();
+	std::cout << "destructor check" << std::endl << std::endl;
+	anotherStructure.printDataStructure();
+	structure->printDataStructure();
+	
 	separator();
 
-	DataStructure* cache = new DataStructure(GetStruct5(10, 20), 20);
-	structure->printDataStructure();
+	anotherStructure.~DataStructure();
+	structure->~DataStructure();
+
+	structure = new DataStructure(GetStruct5(10, 20), 20);
+	anotherStructure = *structure;
+	
+	std::cout << (*structure == anotherStructure) << std::endl;
+	structure->insertItem((char*)"Game Over");
+	structure->insertItem((char*)"Does It");
+	std::cout << (*structure == anotherStructure) << std::endl;
+
+	anotherStructure.insertItem((char*)"Does It");
+	anotherStructure.insertItem((char*)"Game Over");
+
+	std::cout << (*structure == anotherStructure) << std::endl; // Order matters!
+
 	separator();
-	cache->printDataStructure();
-	*/
 }
 
 void tests() {
-	ITEM10* items = (ITEM10*) GetItem(10);
-	items->pNext = (ITEM10*)GetItem(10);
-	items->pNext->pNext = (ITEM10*)GetItem(10);
-	items->pNext->pNext->pNext = (ITEM10*)GetItem(10);
-	items->pNext->pNext->pNext->pNext = (ITEM10*)GetItem(10);
-	items->pNext->pNext->pNext->pNext->pNext = (ITEM10*)GetItem(10);
-	items->pNext->pNext->pNext->pNext->pNext->pNext = (ITEM10*)GetItem(10);
-	items->pNext->pNext->pNext->pNext->pNext->pNext->pNext = (ITEM10*)GetItem(10);
-	ItemsHandler::printItemList(items);
-	separator();
-	std::vector <ITEM10> collection = ItemsHandler::listToVector(items);
-	
-	DataStructure* structure = new DataStructure(GetStruct5(10, 10), 10);
-	for (size_t i = 0; i < collection.size(); i++) {
-		structure->insertItem(&collection[i]);
-	}
-	
-	structure->printDataStructure();
-	separator();
-	
-	std::vector <ITEM10> result = structure->getAllItems();
-	for (auto i : result) { ItemsHandler::printItem(&i); }
 }
 
 int main() {
-	tests();
+	// tests();
 	// coursework1(); // Done!
-	// coursework2();
+	coursework2();
 	return 0;
 }

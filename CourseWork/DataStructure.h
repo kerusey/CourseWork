@@ -11,14 +11,16 @@
 class DataStructure {
 	HEADER_E* entryPoint;
 	size_t size;
+	DataStructure* copyElements(DataStructure& original);
 	
 public:
 	DataStructure(HEADER_E* generatedStructure, size_t size);
 	DataStructure(); // CW2
+	DataStructure(DataStructure& original); // CW2
 	DataStructure(char* pFilename); // CW2
 	void printDataStructure();
 	void insertItem(char* pNewItemID = 0);
-	void insertItem(ITEM10* item);
+	void insertItem(ITEM10& item);
 	bool isInStructure(char* itemID);
 	void removeItem(char* itemID);
 	ITEM10* getItem(char* pID); // CW2
@@ -28,8 +30,8 @@ public:
 	// operators 
 	void operator+=(ITEM10* anotherStructure); // Done
 	void operator-=(char* pID); // Done
-	DataStructure& operator=(DataStructure& right); 
-	int operator==(DataStructure& other); 
+	DataStructure& operator=(DataStructure& right); // Done
+	int operator==(DataStructure& other); // Done
 	// operators 
 
 	friend std::ostream& operator<<(std::ostream& out, DataStructure& list) {

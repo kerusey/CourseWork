@@ -5,6 +5,12 @@
 DataStructure::DataStructure(HEADER_E* generatedStructure, size_t size): 
 	entryPoint (generatedStructure), size(size) {}
 
+DataStructure::DataStructure(DataStructure& original) {
+	DataStructure* cache = copyElements(original);
+	this->entryPoint = cache->entryPoint;
+	this->size = cache->size;
+}
+
 DataStructure::DataStructure() :
 	entryPoint(nullptr), size(0) {}
 
@@ -82,9 +88,18 @@ void DataStructure::insertItem(char* pNewItemID) {
 	}
 }
 
-void DataStructure::insertItem(ITEM10* item) {
-	item->pNext = (ITEM10*) *(this->entryPoint->ppItems);
-	*(this->entryPoint->ppItems) = item;
+void DataStructure::insertItem(ITEM10& item) {
+	ITEM10* newNode = (ITEM10*) malloc(sizeof(ITEM10));
+
+	newNode->Code = item.Code;
+	newNode->pID = item.pID;
+	newNode->Date.Day = item.Date.Day;
+	newNode->Date.pMonth = item.Date.pMonth;
+	newNode->Date.Year = item.Date.Year;
+
+	newNode->pNext = (ITEM10*) *(this->entryPoint->ppItems);
+	*(this->entryPoint->ppItems) = newNode;
+	
 	this->size++;
 }
 
@@ -136,24 +151,20 @@ void DataStructure::operator-=(char* item) {
 
 DataStructure& DataStructure::operator=(DataStructure& right) {
 	this->~DataStructure();
-	
+	DataStructure* newOne = copyElements(right);
+	this->entryPoint = newOne->entryPoint;
+	this->size = newOne->size;
 	return *this;
 } 
 
 int DataStructure::operator==(DataStructure& other) {
 	if (this->size != other.getItemsNumber()) { return 0; }
-	
-	HEADER_E* cache = this->entryPoint;
-	HEADER_E* otherCache = other.entryPoint;
-
-	for (; cache || otherCache; cache = cache->pNext, otherCache = otherCache->pNext) {
-		if (!cache && otherCache || cache && !otherCache) { return 0; }
-		for (int counter = 0; counter < 26; counter++) {
-			bool areSame = ItemsHandler::areSame(((ITEM10**)cache->ppItems)[counter],
-												 ((ITEM10**)otherCache->ppItems)[counter]);
-			if (!areSame) { return 0; }
-		}
+	std::vector <ITEM10> thisItems = this->getAllItems();
+	std::vector <ITEM10> otherItems = other.getAllItems();
+	for (int i = 0; i < thisItems.size(); i++) {
+		if (!ItemsHandler::areSame(&thisItems[i], &otherItems[i])) { return 0; }
 	}
+
 	return 1;
 }
 
@@ -166,5 +177,17 @@ std::vector <ITEM10> DataStructure::getAllItems() {
 			result.insert(result.end(), cache.begin(), cache.end());
 		}
 	}
+	reverse(result.begin(), result.end());
 	return result;
+}
+
+DataStructure* DataStructure::copyElements(DataStructure& original) {
+	std::vector <ITEM10> itemsToBeAppended = original.getAllItems();
+	DataStructure* newDataStruct = new DataStructure(GetStruct5(10, 1), 1);
+	ITEM10 itemToBeRemoved = newDataStruct->getAllItems()[0];
+	newDataStruct->insertItem((char*) "Danila Likh"); // setting up static cache entry point 
+	newDataStruct->removeItem(itemToBeRemoved.pID);
+	for (int i = 0; i < itemsToBeAppended.size(); i++) { newDataStruct->insertItem(itemsToBeAppended[i]); }
+	newDataStruct->removeItem((char*)"Danila Likh"); // removing it
+	return newDataStruct;
 }
